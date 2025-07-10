@@ -1,41 +1,77 @@
 import { useRef, useState, useEffect } from "react";
 
-
 function Token({ imgSrc }) {
     const [pos, setPos] = useState({x: 0, y: 0});
     const [offset, setOffset] = useState({x: 0, y: 0});
     const draggingRef = useRef(false);
     console.log("pos x: " + pos.x + " pos y: " + pos.y);
 
-    const handleMouseDown = (e) => {
+    // moving tokens
+    const startDragging = (x, y) => {
         draggingRef.current = true;
-
         setOffset({
-            x: e.clientX - pos.x,
-            y: e.clientY - pos.y,
+            x: x - pos.x,
+            y: y - pos.y,
         });
         console.log("mouse x: " + e.clientX + " mouse y: " + e.clientY);
         console.log("pos x: " + pos.x + " pos y: " + pos.y);
+    }
+
+    const drag = (x, y) => {
+        if(!draggingRef.current) return;
+        setPos({
+            x: x - offset.x,
+            y: y - offset.y,
+        });
+    }
+
+    const stopDragging = () => {
+        draggingRef.current = false;
+    }
+
+    // move with mouse
+    const handleMouseDown = (e) => {
+        e.preventDefault();
+        startDragging(e.clientX, e.clientY);
     };
 
     const handleMouseMove = (e) => {
-        if(!draggingRef.current) return;
-        setPos({
-            x: e.clientX - offset.x,
-            y: e.clientY - offset.y,
-        });
+        e.preventDefault();
+        drag(e.clientX, e.clientY);
     };
 
     const handleMouseUp = (e) => {
-        draggingRef.current = false;
+        stopDragging();
     };
+
+    // move with touchscreen
+    const handleTouchDown = (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        startDragging(touch.clientX, touch.clientY);
+    }
+
+    const handleTouchDrag = (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        drag(touch.clientX, touch.clientY);
+    }
+
+    const handleStopTouch = (e) => {
+        stopDragging();
+    }
 
     useEffect(() => {
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('touchmove', handleTouchDrag);
+        document.addEventListener('touchend', handleStopTouch);
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('touchmove', handleTouchDrag);
+            document.removeEventListener('touchend', handleStopTouch);
+
         };
     }, [offset]);
 
@@ -43,6 +79,7 @@ function Token({ imgSrc }) {
         <img
             src={imgSrc}
             onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchDown}
             draggable={false}
             style={{
                 position: 'absolute',
@@ -52,6 +89,7 @@ function Token({ imgSrc }) {
                 cursor: draggingRef.current ? 'grabbing' : 'grab',
                 userSelect: 'none',
                 zIndex: 10,
+                touchAction: 'none'
             }}
             alt="Token"
         />

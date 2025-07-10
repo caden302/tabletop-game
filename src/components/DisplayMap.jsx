@@ -1,8 +1,8 @@
 import {useContext, useState} from 'react';
-import MapContext from './MapContext';
+import MapContext from '../context/MapContext';
 import Token from './Token';
-import map from './assets/dnd map for testing.webp'
-import TokenImg from './assets/token for testing.jpg';
+import map from '../assets/dnd map for testing.webp'
+import TokenImg from '../assets/token for testing.jpg';
 
 function DisplayMap(){
     const {mapFile} = useContext(MapContext);
