@@ -1,23 +1,38 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MapContext from '../context/MapContext';
+//import MapContext from '../context/MapContext';
 import Background from '../assets/TableTop_Background.png';
+import Token from './Token';
+import TokenImg from '../assets/token for testing.jpg';
+import Map from '../assets/dnd map for testing.webp'
 
 function UploadMap(){
-    const {setMapFile} = useContext(MapContext);
+    //const {setMapFile} = useContext(MapContext);
     const [file, setFile] = useState(null);
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(file){
-            setMapFile(file);
-            navigate('/map');
-        }else{
+        if(!file){
             console.log("No file selected");
         }
     };
     
+    if(file) {
+        return (
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+            <img 
+                src={URL.createObjectURL(file)}
+                alt="Uploaded Map"
+                style={{maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', display: 'block',  margin: '0'}}
+            />
+            <Token
+                imgSrc={TokenImg}
+            />
+            </div>
+        )
+    };
+
     return (
         <div
             style={{
@@ -51,7 +66,7 @@ function UploadMap(){
                 <button type="submit">Upload</button>
             </form>
         </div>
-    );
-}
+    )
+};
 
 export default UploadMap
