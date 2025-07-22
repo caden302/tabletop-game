@@ -1,10 +1,10 @@
 import Token from "./Token";
-import enemyImg from "../assets/BlackFrost.webp";
+import characterImg from "../assets/Nahobino_Form_Render.webp";
 
-function EnemyToken(props) {
+function CharacterToken(props) {
     return (
         <Token
-            imgSrc={enemyImg}
+            imgSrc={characterImg}
             initialPos={{x:300, y:150}}
             size={24}
             {...props}
@@ -12,4 +12,4 @@ function EnemyToken(props) {
     )
 }
 
-export default EnemyToken;
+export default CharacterToken;

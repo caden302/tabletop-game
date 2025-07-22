@@ -3,6 +3,8 @@ import MapContext from '../context/MapContext';
 import Token from './Token';
 import map from '../assets/dnd map for testing.webp'
 import TokenImg from '../assets/token for testing.jpg';
+import CharacterToken from './CharacterToken';
+import EnemyToken from './EnemyToken';
 
 function DisplayMap(){
     const {mapFile} = useContext(MapContext);
@@ -22,9 +24,10 @@ function DisplayMap(){
                 alt="Uploaded Map"
                 style={{maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', display: 'block',  margin: '0'}}
             />
-            <Token
-                imgSrc={TokenImg}
-            />
+            <CharacterToken
+            ></CharacterToken>
+            <EnemyToken
+            ></EnemyToken>
         </div>
     )
 }

@@ -1,10 +1,7 @@
 import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-//import MapContext from '../context/MapContext';
 import Background from '../assets/TableTop_Background.png';
-import Token from './Token';
-import TokenImg from '../assets/token for testing.jpg';
-import Map from '../assets/dnd map for testing.webp'
+import CharacterToken from './CharacterToken';
+import EnemyToken from './EnemyToken';
 
 function UploadMap(){
     //const {setMapFile} = useContext(MapContext);
@@ -21,14 +18,15 @@ function UploadMap(){
     if(file) {
         return (
             <div style={{ position: 'relative', display: 'inline-block' }}>
-            <img 
-                src={URL.createObjectURL(file)}
-                alt="Uploaded Map"
-                style={{maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', display: 'block',  margin: '0'}}
-            />
-            <Token
-                imgSrc={TokenImg}
-            />
+                <img 
+                    src={URL.createObjectURL(file)}
+                    alt="Uploaded Map"
+                    style={{maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', display: 'block',  margin: '0'}}
+                />
+                <CharacterToken
+                ></CharacterToken>
+                <EnemyToken
+                ></EnemyToken>
             </div>
         )
     };
