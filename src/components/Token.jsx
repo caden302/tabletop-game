@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 
-function Token({ imgSrc }) {
-    const [pos, setPos] = useState({x: 0, y: 0});
+function Token({ imgSrc, initialX = 0, initialY = 0, id, name, type}) {
+    const [pos, setPos] = useState({x: initialX, y: initialY});
     const [offset, setOffset] = useState({x: 0, y: 0});
     const draggingRef = useRef(false);
     console.log("pos x: " + pos.x + " pos y: " + pos.y);
@@ -13,8 +13,6 @@ function Token({ imgSrc }) {
             x: x - pos.x,
             y: y - pos.y,
         });
-        console.log("mouse x: " + e.clientX + " mouse y: " + e.clientY);
-        console.log("pos x: " + pos.x + " pos y: " + pos.y);
     }
 
     const drag = (x, y) => {

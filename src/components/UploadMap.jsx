@@ -2,24 +2,17 @@ import { useState, useContext } from 'react';
 import Background from '../assets/TableTop_Background.png';
 import CharacterToken from './CharacterToken';
 import EnemyToken from './EnemyToken';
+import MapContext from '../context/MapContext.jsx';
 
 function UploadMap(){
-    //const {setMapFile} = useContext(MapContext);
-    const [file, setFile] = useState(null);
-    //const navigate = useNavigate();
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if(!file){
-            console.log("No file selected");
-        }
-    };
+    const {mapImg,setMapImg} = useContext(MapContext);
     
-    if(file) {
+    if(mapImg) {
+        console.log(mapImg);
         return (
             <div style={{ position: 'relative', display: 'inline-block' }}>
                 <img 
-                    src={URL.createObjectURL(file)}
+                    src={mapImg}
                     alt="Uploaded Map"
                     style={{maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', display: 'block',  margin: '0'}}
                 />
@@ -45,24 +38,20 @@ function UploadMap(){
                 height: '100vh',
             }}
             >
-            <form
-                onSubmit={handleSubmit}
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '10px',
-                    borderRadius: '8px',
-                }}
-            >
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setFile(e.target.files[0])}
-                />
-                <button type="submit">Upload</button>
-            </form>
+            <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                        const file = e.target.files[0];
+                        e.preventDefault();
+                        if(file){
+                            const mapUrl = URL.createObjectURL(file);
+                            setMapImg(mapUrl);
+                        }
+                    }
+                }
+            />
+            <button type="submit">Upload</button>
         </div>
     )
 };
